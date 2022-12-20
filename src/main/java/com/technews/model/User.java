@@ -2,23 +2,23 @@ package com.technews.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
 
-import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
+@JsonIgnoreProperties
+@Table(name = "user")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String username;
     @Column(unique = true)
     private String email;
-    private  String password;
+    private String password;
     @Transient
     boolean loggedIn;
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -139,5 +139,4 @@ public class User {
                 ", comments=" + comments +
                 '}';
     }
-
 }

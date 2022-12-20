@@ -1,14 +1,16 @@
 package com.technews.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
-import org.jetbrains.annotations.NotNull;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +30,8 @@ public class Post {
     @Temporal(TemporalType.DATE)
     @Column(name = "updated_at")
     private Date updatedAt = new Date();
+
+    // Need to use FetchType.LAZY to resolve multiple bags exception
     @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments;
 
@@ -125,8 +129,8 @@ public class Post {
                 Objects.equals(postUrl, post.postUrl) &&
                 Objects.equals(userName, post.userName) &&
                 Objects.equals(userId, post.userId) &&
-                postedAt.equals(post.postedAt) &&
-                updatedAt.equals(post.updatedAt) &&
+                Objects.equals(postedAt, post.postedAt) &&
+                Objects.equals(updatedAt, post.updatedAt) &&
                 Objects.equals(comments, post.comments);
     }
 

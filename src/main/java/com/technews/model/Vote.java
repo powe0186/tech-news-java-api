@@ -9,7 +9,6 @@ import java.util.Objects;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "vote")
 public class Vote {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -21,6 +20,11 @@ public class Vote {
 
     public Vote(Integer id, Integer userId, Integer postId) {
         this.id = id;
+        this.userId = userId;
+        this.postId = postId;
+    }
+
+    public Vote(Integer userId, Integer postId) {
         this.userId = userId;
         this.postId = postId;
     }

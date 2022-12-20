@@ -7,11 +7,11 @@ import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "comment")
 public class Comment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
+    private Integer id;
     private String commentText;
     private Integer userId;
     private Integer postId;
@@ -20,18 +20,18 @@ public class Comment {
     }
 
     public Comment(Integer id, String commentText, Integer userId, Integer postId) {
-        Id = id;
+        this.id = id;
         this.commentText = commentText;
         this.userId = userId;
         this.postId = postId;
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getCommentText() {
@@ -63,7 +63,7 @@ public class Comment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return Objects.equals(Id, comment.Id) &&
+        return Objects.equals(id, comment.id) &&
                 Objects.equals(commentText, comment.commentText) &&
                 Objects.equals(userId, comment.userId) &&
                 Objects.equals(postId, comment.postId);
@@ -71,13 +71,13 @@ public class Comment {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, commentText, userId, postId);
+        return Objects.hash(id, commentText, userId, postId);
     }
 
     @Override
     public String toString() {
         return "Comment{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", commentText='" + commentText + '\'' +
                 ", userId=" + userId +
                 ", postId=" + postId +
