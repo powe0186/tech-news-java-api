@@ -3,6 +3,7 @@ package com.technews.controller;
 import com.technews.model.Post;
 import com.technews.model.User;
 import com.technews.repository.UserRepository;
+import com.technews.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -15,6 +16,9 @@ public class UserController {
 
     @Autowired
     UserRepository repository;
+
+    @Autowired
+    VoteRepository voteRepository;
 
     @GetMapping("/api/users")
     public List<User> getAllUsers() {
@@ -33,8 +37,9 @@ public class UserController {
         User returnUser = repository.getById(id);
         List<Post> postList = returnUser.getPosts();
         for (Post p : postList) {
-            p.setAVoteCoutn(voteRepository.countVotesByPostId(p.getId()));
+            p.setVoteCount(voteRepository.countVotesByPostId(p.getId()));
         }
+
         return returnUser;
     }
 
